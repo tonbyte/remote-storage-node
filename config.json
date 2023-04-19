@@ -1,0 +1,7 @@
+{
+	"sp_cli_path": "path to storage-daemon-cli",
+	"sp_cli_port": 5555,
+	"storage_db_path": "path to storage-db folder",
+	"port": 34312,
+	"whitelist_ip": ["195.133.147.156", "47.87.160.118", "46.17.248.81"]
+}
