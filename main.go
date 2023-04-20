@@ -1,12 +1,14 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"regexp"
 	"strconv"
 
 	"github.com/tonbyte/remote-storage-node/config"
+	"github.com/tonbyte/remote-storage-node/datatype"
 	"github.com/tonbyte/remote-storage-node/storage"
 
 	"github.com/labstack/echo/v4"
@@ -90,6 +92,18 @@ func main() {
 
 		return c.JSON(http.StatusOK, echo.Map{
 			"message": "ok",
+		})
+	})
+
+	e.GET("/listHashes", func(c echo.Context) error {
+		log.Info("/listHashes")
+
+		listJson := storage.ListHashes()
+		bagsList := datatype.BagsList{}
+		json.Unmarshal([]byte(listJson), &bagsList)
+
+		return c.JSON(http.StatusOK, echo.Map{
+			"result": bagsList,
 		})
 	})
 
