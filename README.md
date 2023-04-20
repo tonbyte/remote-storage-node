@@ -45,3 +45,5 @@ Where:
 `http://YOUR_IP:34312/addBag/BAG_ID` - use to add bag to storage
 
 `http://YOUR_IP:34312/removeBag/BAG_ID` - use to remove bag from storage
+
+`http://YOUR_IP:34312/listHashes` - use to get all bags that node store

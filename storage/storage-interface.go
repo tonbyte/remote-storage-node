@@ -48,6 +48,18 @@ func RemoveBag(bagID string) bool {
 	return parseRemoveBagOutput(string(output))
 }
 
+func ListHashes() string {
+	cliQuery := `"list" "--json" "--hashes"`
+	output, err := execStorageCliCommand(cliQuery)
+	fmt.Println(string(output)[0:100])
+
+	if err != nil {
+		log.Warn(fmt.Sprintf("ExecQuery() error: %s\noutput: %s", err.Error(), output))
+	}
+
+	return parseListHashesOutput(string(output))
+}
+
 func parseRemoveBagOutput(output string) bool {
 	return strings.Contains(output, "No such torrent") || strings.Contains(output, "Success")
 }
@@ -65,4 +77,17 @@ func parseCreateBagOutput(output string) string {
 	}
 
 	return output[bagIdBegin : bagIdBegin+64]
+}
+
+func parseListHashesOutput(output string) string {
+	if !strings.Contains(output, "@type") {
+		return "invalid bag id"
+	}
+
+	startIndex := strings.Index(output, "{")
+	if startIndex == -1 {
+		return "invalid bag id"
+	}
+
+	return output[startIndex:]
 }
